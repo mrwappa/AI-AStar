@@ -1,0 +1,27 @@
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\Content\Sprites\spr_box.xnb
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\Content\Sprites\spr_pixel.xnb
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\Content\Font.xnb
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\AI AStar.exe
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\AI AStar.pdb
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\MonoGame.Framework.dll
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\SharpDX.dll
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\SharpDX.XAudio2.dll
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\SharpDX.DXGI.dll
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\SharpDX.Direct3D11.dll
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\SharpDX.Direct2D1.dll
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\SharpDX.XInput.dll
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\SharpDX.Direct3D9.dll
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\MonoGame.Framework.xml
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\SharpDX.xml
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\SharpDX.XAudio2.xml
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\SharpDX.DXGI.xml
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\SharpDX.XInput.xml
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\obj\x86\Debug\AI AStar.csprojResolveAssemblyReference.cache
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\obj\x86\Debug\AI AStar.csproj.CoreCompileInputs.cache
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\obj\x86\Debug\AI AStar.exe
+c:\users\erik wapner\source\repos\AI AStar\AI AStar\obj\x86\Debug\AI AStar.pdb

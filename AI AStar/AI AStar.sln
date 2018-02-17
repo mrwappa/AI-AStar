@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2024
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI AStar", "AI AStar\AI AStar.csproj", "{6DC69D3F-9E63-4B7A-B68B-3BB05EAD28D9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6DC69D3F-9E63-4B7A-B68B-3BB05EAD28D9}.Debug|x86.ActiveCfg = Debug|x86
+		{6DC69D3F-9E63-4B7A-B68B-3BB05EAD28D9}.Debug|x86.Build.0 = Debug|x86
+		{6DC69D3F-9E63-4B7A-B68B-3BB05EAD28D9}.Release|x86.ActiveCfg = Release|x86
+		{6DC69D3F-9E63-4B7A-B68B-3BB05EAD28D9}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D0A3238C-ECCA-4348-9581-944584598812}
+	EndGlobalSection
+EndGlobal
