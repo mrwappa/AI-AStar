@@ -59,9 +59,7 @@ namespace AI_AStar
             font = Content.Load<SpriteFont>("Font");
             camera = new Camera(monitorWidth, monitorHeight);
 
-            new Room(100, 100);
-
-            GameObject.InitGame(spriteBatch, random, font, camera);
+            GameObject.InitGame(spriteBatch, random, font, camera, Content);
             // TODO: use this.Content to load your game content here
         }
 

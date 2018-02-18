@@ -14,24 +14,45 @@ namespace AI_AStar.Code.GameObjects
     {
         public static Dictionary<Type, List<GameObject>> SuperList = new Dictionary<Type, List<GameObject>>();
 
-        public static void InitGame(SpriteBatch spriteBatch, Random random, SpriteFont font, Camera camera)
+        public static void InitGame(SpriteBatch spriteBatch, Random random, SpriteFont font, Camera camera, ContentManager content)
         {
             SpriteBatch = spriteBatch;
             Random = random;
             Font = font;
             Camera = camera;
+            Content = content;
+            Box = Content.Load<Texture2D>("Sprites/spr_box");
+            Pixel = Content.Load<Texture2D>("Sprites/spr_pixel");
+
+            List<List<Node>> temp = new List<List<Node>>();
+            for (int i = 0; i < 30; i++)//30
+            {
+                temp.Add(new List<Node>());
+                for (int j = 0; j < 17; j++)//17
+                {
+                    temp[i].Add(new Node(new Vector2(i, j), true));
+                }
+            }
+            AStarGrid = new Astar(temp);
+            new Room(0, 0);
         }
 
         public static SpriteBatch SpriteBatch;
         public static Random Random;
         public static SpriteFont Font;
         public static Camera Camera;
+        public static ContentManager Content;
 
         public static MouseState Mouse;
         public static MouseState PreviousMouseState;
         public static KeyboardState Keyboard;
         public static KeyboardState PreviousKeyboardState;
-        
+
+        public static Texture2D Box;
+        public static Texture2D Pixel;
+
+        public static Astar AStarGrid;
+
         public float X { get; set; }
         public float Y { get; set; }
 
@@ -100,9 +121,15 @@ namespace AI_AStar.Code.GameObjects
 
         public void RemoveInstance(GameObject gameObject)
         {
+            gameObject.OnRemove();
             Type type = gameObject.GetType();
             SuperList.TryGetValue(type, out list);
             list.Remove(gameObject);
+        }
+
+        public virtual void OnRemove()
+        {
+
         }
 
         public bool GetKeyPressed(Keys key)
