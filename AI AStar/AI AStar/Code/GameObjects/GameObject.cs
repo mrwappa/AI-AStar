@@ -107,6 +107,8 @@ namespace AI_AStar.Code.GameObjects
 
         }
 
+        
+
         List<GameObject> list;
         public void AddInstance(GameObject gameObject)
         {
@@ -119,12 +121,31 @@ namespace AI_AStar.Code.GameObjects
             list.Add(gameObject);
         }
 
-        public void RemoveInstance(GameObject gameObject)
+        public void DestroyInstance(GameObject gameObject)
         {
             gameObject.OnRemove();
             Type type = gameObject.GetType();
             SuperList.TryGetValue(type, out list);
             list.Remove(gameObject);
+        }
+
+        public virtual void DestroyAll()
+        {
+            foreach (KeyValuePair<Type, List<GameObject>> list in SuperList)
+            {
+                foreach (GameObject obj in list.Value.ToList())
+                {
+                    DestroyInstance(obj);
+                }
+            }
+
+            foreach (KeyValuePair<Type, List<CollideObject>> list in CollideObject.CollisionList)
+            {
+                foreach (CollideObject obj in list.Value.ToList())
+                {
+                    list.Value.Remove(obj);
+                }
+            }
         }
 
         public virtual void OnRemove()
@@ -185,6 +206,12 @@ namespace AI_AStar.Code.GameObjects
         public static float SnapToGrid(float x)
         {
             return ((float)Math.Floor(x / Node.NODE_SIZE) * Node.NODE_SIZE + 16);
+        }
+
+        public void DrawLine(Vector2 start, Vector2 end, Color color, float depth)
+        {
+            Vector2 delta = end - start;
+            SpriteBatch.Draw(Pixel, start, null, color, (float)Math.Atan2(delta.Y, delta.X), Vector2.UnitY * 0.5f, new Vector2(delta.Length(), 1.0f), SpriteEffects.None, depth);
         }
 
     }

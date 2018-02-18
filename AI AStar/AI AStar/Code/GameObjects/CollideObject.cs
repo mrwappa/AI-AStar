@@ -33,9 +33,8 @@ namespace AI_AStar.Code.GameObjects
             list.Add(gameObject);
         }
 
-        public void RemoveInstance(CollideObject gameObject)
+        public void DestroyInstance(CollideObject gameObject, Type type)
         {
-            Type type = gameObject.GetType();
             CollisionList.TryGetValue(type, out list);
             list.Remove(gameObject);
         }

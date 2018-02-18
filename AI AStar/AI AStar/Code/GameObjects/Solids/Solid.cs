@@ -20,7 +20,7 @@ namespace AI_AStar.Code.GameObjects
         public override void OnRemove()
         {
             AStarGrid.Grid[((int)X - Node.NODE_SIZE / 2) / 32][((int)Y - Node.NODE_SIZE / 2) / 32].Walkable = true;
-            base.RemoveInstance(this as Solid);
+            DestroyInstance(this, typeof(Solid));
             base.OnRemove();
         }
     }

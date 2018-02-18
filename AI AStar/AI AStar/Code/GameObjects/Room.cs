@@ -14,7 +14,12 @@ namespace AI_AStar.Code.GameObjects
     {
         public Room(float x, float y) : base(x, y)
         {
+            CreateInstances();
+        }
 
+        public void CreateInstances()
+        {
+            new PathFinder(32 + 16, 32 + 16);
         }
 
         public override void Update()
@@ -23,11 +28,11 @@ namespace AI_AStar.Code.GameObjects
             {
                 if (GridSnapMouse.X < 960 && GridSnapMouse.Y < 540 && GridSnapMouse.X > 0 && GridSnapMouse.Y > 0)
                 {
-                    List<CollideObject> tempList = CollideObject.GetList(typeof(Solid));
-                    if (tempList != null)
+                    List<CollideObject> solids = CollideObject.GetList(typeof(Solid));
+                    if (solids != null)
                     {
                         bool canCreate = true;
-                        foreach (Solid obj in tempList)
+                        foreach (Solid obj in solids)
                         {
                             if (obj.X == GridSnapMouse.X && obj.Y == GridSnapMouse.Y)
                             {
@@ -46,7 +51,32 @@ namespace AI_AStar.Code.GameObjects
                 }
 
             }
+
+            if (Mouse.RightButton == ButtonState.Pressed)
+            {
+                List<CollideObject> solids = CollideObject.GetList(typeof(Solid));
+                foreach (Solid obj in solids.ToList())
+                {
+                    if (obj.X == GridSnapMouse.X && obj.Y == GridSnapMouse.Y)
+                    {
+                        DestroyInstance(obj);
+                    }
+                }
+            }
+
+            if(GetKeyPressed(Keys.R))
+            {
+                RestartRoom();
+            }
+
             base.Update();
+        }
+
+        public void RestartRoom()
+        {
+            DestroyAll();
+            new Room(0, 0);
+            CreateInstances();
         }
 
         public override void Draw()
