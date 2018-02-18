@@ -41,8 +41,10 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AStar.cs" />
     <Compile Include="Code\Camera.cs" />
     <Compile Include="Code\GameObjects\GameObject.cs" />
+    <Compile Include="Code\GameObjects\Room.cs" />
     <Compile Include="Code\Sprite.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />

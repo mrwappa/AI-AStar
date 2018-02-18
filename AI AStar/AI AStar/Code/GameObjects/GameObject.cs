@@ -58,30 +58,30 @@ namespace AI_AStar.Code.GameObjects
             YScale = 1;
         }
 
-        public void BeginUpdate()
+        public virtual void BeginUpdate()
         {
 
         }
 
-        public void Update()
+        public virtual void Update()
         {
 
         }
 
-        public void EndUpdate()
+        public virtual void EndUpdate()
         {
 
         }
 
-        public void Draw()
+        public virtual void Draw()
         {
-            if(Sprite.Drawable)
+            if(Sprite != null)
             {
                 Sprite.DrawSprite(X, Y, XScale, YScale, Angle, Color, Alpha, Depth);
             }
         }
 
-        public void DrawGUI()
+        public virtual void DrawGUI()
         {
 
         }
@@ -142,6 +142,23 @@ namespace AI_AStar.Code.GameObjects
             return null;
         }
 
+        public static Vector2 GridSnapMouse
+        {
+            get
+            {
+                return new Vector2((float)Math.Floor(Camera.MouseX / Node.NODE_SIZE) * Node.NODE_SIZE + 16,
+                                    (float)Math.Floor(Camera.MouseY / Node.NODE_SIZE) * Node.NODE_SIZE + 16);
+            }
+        }
+        public Vector2 SnapToGrid(float x, float y)
+        {
+            return new Vector2((float)Math.Floor(x / Node.NODE_SIZE) * Node.NODE_SIZE + 16,
+                                    (float)Math.Floor(y / Node.NODE_SIZE) * Node.NODE_SIZE + 16);
+        }
+        public static float SnapToGrid(float x)
+        {
+            return ((float)Math.Floor(x / Node.NODE_SIZE) * Node.NODE_SIZE + 16);
+        }
 
     }
 }

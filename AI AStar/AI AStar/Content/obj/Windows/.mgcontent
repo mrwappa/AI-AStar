@@ -4,8 +4,8 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Erik Wapner/source/repos/AI AStar/AI AStar/Content/Sprites/spr_box.png</File>
-    <File>C:/Users/Erik Wapner/source/repos/AI AStar/AI AStar/Content/Sprites/spr_pixel.png</File>
-    <File>C:/Users/Erik Wapner/source/repos/AI AStar/AI AStar/Content/Font.spritefont</File>
+    <File>C:/Users/Erik Wapner/Documents/GitHub/AI-AStar/AI AStar/AI AStar/Content/Sprites/spr_box.png</File>
+    <File>C:/Users/Erik Wapner/Documents/GitHub/AI-AStar/AI AStar/AI AStar/Content/Sprites/spr_pixel.png</File>
+    <File>C:/Users/Erik Wapner/Documents/GitHub/AI-AStar/AI AStar/AI AStar/Content/Font.spritefont</File>
   </SourceFiles>
 </SourceFileCollection>

@@ -54,10 +54,14 @@ namespace AI_AStar
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            GameObject.InitGame(spriteBatch, random, font, camera);
+            
             Sprite.SpriteBatch = spriteBatch;
             font = Content.Load<SpriteFont>("Font");
             camera = new Camera(monitorWidth, monitorHeight);
+
+            new Room(100, 100);
+
+            GameObject.InitGame(spriteBatch, random, font, camera);
             // TODO: use this.Content to load your game content here
         }
 
