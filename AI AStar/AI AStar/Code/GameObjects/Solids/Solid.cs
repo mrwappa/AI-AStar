@@ -13,6 +13,7 @@ namespace AI_AStar.Code.GameObjects
     {
         public Solid(float x, float y) : base(x, y)
         {
+            
             base.AddInstance(this, typeof(Solid));
             AStarGrid.Grid[((int)X - Node.NODE_SIZE / 2) / 32][((int)Y - Node.NODE_SIZE / 2) / 32].Walkable = false;
         }

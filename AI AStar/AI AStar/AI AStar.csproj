@@ -47,6 +47,7 @@
     <Compile Include="Code\GameObjects\CollideObject.cs" />
     <Compile Include="Code\GameObjects\GameObject.cs" />
     <Compile Include="Code\GameObjects\PathFinder.cs" />
+    <Compile Include="Code\GameObjects\Player.cs" />
     <Compile Include="Code\GameObjects\Room.cs" />
     <Compile Include="Code\GameObjects\Solids\Brick.cs" />
     <Compile Include="Code\GameObjects\Solids\Solid.cs" />

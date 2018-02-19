@@ -16,7 +16,5 @@ namespace AI_AStar.Code.GameObjects
         {
             Sprite = new Sprite(Box, 1);
         }
-        
-        
     }
 }

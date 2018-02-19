@@ -20,6 +20,7 @@ namespace AI_AStar.Code.GameObjects
         public void CreateInstances()
         {
             new PathFinder(32 + 16, 32 + 16);
+            new Player(300, 300);
         }
 
         public override void Update()

@@ -12,14 +12,23 @@ namespace AI_AStar.Code.GameObjects
 {
     class CollideObject : GameObject
     {
+
+
         public static Dictionary<Type, List<CollideObject>> CollisionList = new Dictionary<Type, List<CollideObject>>();
         
         public CollideObject(float x, float y) : base(x, y)
         {
-            BoundingBox = new Rectangle(0, 0, 0, 0);
+            BoxHeight = 32;
+            BoxWidth = 32;
         }
 
-        public Rectangle BoundingBox { get; set; }
+        public int BoxX => (int)X - BoxWidth / 2;
+        public int BoxY => (int)Y - BoxHeight / 2;
+        public int BoxWidth { get; set; }
+        public int BoxHeight { get; set; }
+
+        public Rectangle BoundingBox => new Rectangle(BoxX, BoxY, BoxWidth, BoxHeight);
+        
 
         List<CollideObject> list;
 
@@ -68,5 +77,14 @@ namespace AI_AStar.Code.GameObjects
             return null;
         }
 
+        public CollideObject BoxCollision(float ExtraX, float ExtraY, CollideObject obj)
+        {
+            if (BoundingBox.X + ExtraX + BoundingBox.Width > obj.BoundingBox.X && BoundingBox.X + ExtraX < obj.BoundingBox.X + obj.BoundingBox.Width &&
+                        BoundingBox.Y + ExtraY + BoundingBox.Height > obj.BoundingBox.Y && BoundingBox.Y + ExtraY < obj.BoundingBox.Y + obj.BoundingBox.Height)
+            {
+                return obj;
+            }
+            return null;
+        }
     }
 }

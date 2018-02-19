@@ -23,11 +23,16 @@ namespace AI_AStar.Code.GameObjects
         public float Direction { get; set; }
 
 
+        float xPrevious;
+        float yPrevious;
+        float xCurrent;
+        float yCurrent;
+
         public PathFinder(float x, float y) : base(x, y)
         {
             Sprite = new Sprite(Box, 1);
             Color = Color.Red;
-            MovementSpeed = 5;
+            MovementSpeed = 6;
         }
 
         public override void Update()
@@ -85,6 +90,11 @@ namespace AI_AStar.Code.GameObjects
 
                 X += Math.Abs(X - XTarget) < Math.Abs(XSpeed) ? 0 : XSpeed;
                 Y += Math.Abs(Y - YTarget) < Math.Abs(YSpeed) ? 0 : YSpeed;
+                
+
+                xPrevious = setValue(Convert.ToSingle(X));
+                yPrevious = setValue(Convert.ToSingle(Y));
+
 
                 if (Math.Abs(X - XTarget) < Math.Abs(XSpeed))
                 {
@@ -94,17 +104,32 @@ namespace AI_AStar.Code.GameObjects
                 {
                     Y = YTarget;
                 }
+                
+
                 if (X == XTarget && Y == YTarget)
                 {
+                    xCurrent = setValue(Convert.ToSingle(X));
+                    yCurrent = setValue(Convert.ToSingle(Y));
                     if (Path.Count != 1 && Path.Count != 0)
                     {
                         Path.Pop();
+
+                        X += xPrevious - xCurrent;
+                        Y += yPrevious - yCurrent;
+                        
+                        
                     }
+
                 }
                 base.Update();
             }
         }
 
+        //dö
+        float setValue(float x)
+        {
+            return x;
+        }
 
         public override void Draw()
         {
