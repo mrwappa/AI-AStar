@@ -89,6 +89,8 @@ namespace AI_AStar.Code.GameObjects
             CollideBlock = BoxCollisionList(xSpeed, 0, typeof(Solid));
             if (CollideBlock != null)
             {
+                xSpeed = 0;
+                X = (float)Math.Round(X);
                 for (int i = 0; i < Math.Abs(xSpeed); i++)
                 {
                     if (BoxCollision(Math.Sign(xSpeed), 0, CollideBlock) != null)
@@ -97,17 +99,52 @@ namespace AI_AStar.Code.GameObjects
                     }
                     X += Math.Sign(xSpeed);
                 }
-                if (X > CollideBlock.BoundingBox.X && xSpeed < 0)
+                
+                if(X > CollideBlock.X && BoxCollision(0,0,CollideBlock) != null)
+                {
+                    float p_difference = Math.Abs((X - Sprite.Texture.Width / 2) - (CollideBlock.X + CollideBlock.Sprite.Texture.Width / 2));
+                    if(p_difference > 0)
+                    {
+                        X += Math.Sign(p_difference);
+                    }
+                }
+                else if(X <= CollideBlock.X && BoxCollision(0, 0, CollideBlock) != null)
+                {
+                    float p_difference = Math.Abs((X + Sprite.Texture.Width / 2) - (CollideBlock.X - CollideBlock.Sprite.Texture.Width / 2));
+                    if(p_difference > 0)
+                    {
+                        X -= Math.Sign(p_difference);
+                    }
+
+                }
+                /*if (X > CollideBlock.BoundingBox.X && xSpeed < 0)
                 {
                     xSpeed = 0;
+                    X = CollideBlock.BoundingBox.X + CollideBlock.BoundingBox.Width + Math.Abs(X - BoundingBox.X);
+                    for (int i = 0; i < Math.Abs(xSpeed); i++)
+                    {
+                        if (BoxCollision(Math.Sign(xSpeed), 0, CollideBlock) != null)
+                        {
+                            break;
+                        }
+                        X -= Math.Sign(xSpeed);
+                    }
                     
-                    //X = CollideBlock.BoundingBox.X + CollideBlock.BoundingBox.Width + Math.Abs(X - BoundingBox.X);
                 }
                 if (X < CollideBlock.BoundingBox.X && xSpeed > 0)
                 {
                     xSpeed = 0;
-                    //X = CollideBlock.BoundingBox.X + Math.Abs(X - BoundingBox.X) - BoundingBox.Width;
-                }
+                    X = CollideBlock.BoundingBox.X + Math.Abs(X - BoundingBox.X) - BoundingBox.Width;
+                    for (int i = 0; i < Math.Abs(xSpeed); i++)
+                    {
+                        if (BoxCollision(Math.Sign(xSpeed), 0, CollideBlock) != null)
+                        {
+                            break;
+                        }
+                        X -= Math.Sign(xSpeed);
+                    }
+                    
+                }*/
 
 
             }
@@ -116,10 +153,20 @@ namespace AI_AStar.Code.GameObjects
             if(CollideBlock != null)
             {
 
-                
-                if (Y > CollideBlock.BoundingBox.Y && ySpeed < 0)
+                ySpeed = 0;
+                Y = (float)Math.Round(Y);
+                for (int i = 0; i < Math.Abs(ySpeed); i++)
+                {
+                    if (BoxCollision(0, Math.Sign(ySpeed), CollideBlock) != null)
+                    {
+                        break;
+                    }
+                    Y += Math.Sign(ySpeed);
+                }
+                /*if (Y > CollideBlock.BoundingBox.Y && ySpeed < 0)
                 {
                     ySpeed = 0;
+                    Y = CollideBlock.BoundingBox.Y + CollideBlock.BoundingBox.Height + Math.Abs(Y - BoundingBox.Y);
                     for (int i = 0; i < Math.Abs(ySpeed); i++)
                     {
                         if (BoxCollision(0, Math.Sign(ySpeed), CollideBlock) != null)
@@ -128,21 +175,22 @@ namespace AI_AStar.Code.GameObjects
                         }
                         Y -= Math.Sign(ySpeed);
                     }
-                    //Y = CollideBlock.BoundingBox.Y + CollideBlock.BoundingBox.Height + Math.Abs(Y - BoundingBox.Y);
+                    
                 }
                 if(Y < CollideBlock.BoundingBox.Y && ySpeed > 0)
                 {
                     ySpeed = 0;
+                    Y = CollideBlock.BoundingBox.Y + Math.Abs(Y - BoundingBox.Y) - BoundingBox.Height;
                     for (int i = 0; i < Math.Abs(ySpeed); i++)
                     {
                         if (BoxCollision(0, Math.Sign(ySpeed), CollideBlock) != null)
                         {
                             break;
                         }
-                        Y += Math.Sign(ySpeed);
+                        Y -= Math.Sign(ySpeed);
                     }
-                    //Y = CollideBlock.BoundingBox.Y + Math.Abs(Y - BoundingBox.Y) - BoundingBox.Height;
-                }
+                    
+                }*/
             }
       
             X += xSpeed;
