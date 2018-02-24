@@ -22,6 +22,15 @@ namespace AI_AStar.Code.GameObjects
         public float YTarget { get; set; }
         public float Direction { get; set; }
 
+        GameObject Target;
+        CollideObject CollideBlock;
+        Color LineColor;
+
+        float pathCounter;
+
+        enum FinderState { Idle, Follow }
+
+        public int CurrentState { get; set; }
 
         float xPrevious;
         float yPrevious;
@@ -32,37 +41,131 @@ namespace AI_AStar.Code.GameObjects
         {
             Sprite = new Sprite(Box, 1);
             Color = Color.Red;
-            MovementSpeed = 6;
+            MovementSpeed = 3f;
+            CurrentState = (int)FinderState.Idle;
+            LineColor = Color.Black;
         }
 
         public override void Update()
         {
-            if (Keyboard.IsKeyDown(Keys.Space) && GetMousePressed(Mouse.LeftButton))
+            Target = GetObject(typeof(Player));
+            /*if (Keyboard.IsKeyDown(Keys.Space) && GetMousePressed(Mouse.LeftButton))
             {
                 if (GridSnapMouse != SnapToGrid(X, Y))
                 {
                      Path = AStarGrid.FindPath(SnapToGrid(X, Y), GridSnapMouse);
                 }
-            }
+            }*/
 
+            if (CurrentState == (int)FinderState.Idle)
+            {
+                Path = null;
+                if (!LineToObjectCollision(new Vector2(X, Y), new Vector2(Target.X, Target.Y), typeof(Solid)))
+                {
+                    CurrentState = (int)FinderState.Follow;
+                }
+            }
+            if (CurrentState == (int)FinderState.Follow)
+            {
+                pathCounter -= 1f / 60f;
+                if (LineToObjectCollision(new Vector2(X, Y), new Vector2(Target.X, Target.Y), typeof(Solid)) && Path == null && pathCounter <= 0)
+                {
+                    Path = AStarGrid.FindPath(SnapToGrid(X, Y), SnapToGrid(Target.X,Target.Y));
+                    pathCounter = 0.5f;
+                }
+                if(!LineToObjectCollision(new Vector2(X, Y), new Vector2(Target.X, Target.Y), typeof(Solid)) && pathCounter <= 0)
+                {
+                    Path = null;
+                }
+                if (Path == null)
+                {
+                    Direction = G.PointDirection(X, Y, Target.X, Target.Y);
+                    XSpeed = G.LengthDirX(MovementSpeed, Direction);
+                    YSpeed = G.LengthDirY(MovementSpeed, Direction);
+
+                    CollideBlock = BoxCollisionList(XSpeed, 0, typeof(Solid));
+                    if (CollideBlock != null)
+                    {
+                        //stop moving and get as close as possible
+                        XSpeed = 0;
+                        X = (float)Math.Round(X);
+                        for (int i = 0; i < Math.Abs(XSpeed); i++)
+                        {
+                            if (BoxCollision(Math.Sign(XSpeed), 0, CollideBlock) != null)
+                            {
+                                break;
+                            }
+                            X += Math.Sign(XSpeed);
+                        }
+
+                        //prevents getting stuck when moving diagonally
+                        if (X > CollideBlock.X && BoxCollision(0, 0, CollideBlock) != null)
+                        {
+                            float p_difference = Math.Abs((X - Sprite.Texture.Width / 2) - (CollideBlock.X + CollideBlock.Sprite.Texture.Width / 2));
+                            if (p_difference > 0)
+                            {
+                                X += Math.Sign(p_difference);
+                            }
+                        }
+                        else if (X <= CollideBlock.X && BoxCollision(0, 0, CollideBlock) != null)
+                        {
+                            float p_difference = Math.Abs((X + Sprite.Texture.Width / 2) - (CollideBlock.X - CollideBlock.Sprite.Texture.Width / 2));
+                            if (p_difference > 0)
+                            {
+                                X -= Math.Sign(p_difference);
+                            }
+
+                        }
+
+
+                    }
+
+                    CollideBlock = BoxCollisionList(0, YSpeed, typeof(Solid));
+                    if (CollideBlock != null)
+                    {
+                        //stop moving and get as close as possible
+                        YSpeed = 0;
+                        Y = (float)Math.Round(Y);
+                        for (int i = 0; i < Math.Abs(YSpeed); i++)
+                        {
+                            if (BoxCollision(0, Math.Sign(YSpeed), CollideBlock) != null)
+                            {
+                                break;
+                            }
+                            Y += Math.Sign(YSpeed);
+                        }
+                    }
+
+                    X += XSpeed;
+                    Y += YSpeed;
+                }
+                else
+                {
+
+                }
+            }
+            
             if (Keyboard.IsKeyDown(Keys.LeftShift) && GetMousePressed(Mouse.LeftButton))
             {
                 bool canMove = true;
                 List<CollideObject> solids = GetList(typeof(Solid));
-                foreach (Solid obj in solids.ToList())
+                if(solids != null)
                 {
-                    if (obj.X == GridSnapMouse.X && obj.Y == GridSnapMouse.Y)
+                    foreach (Solid obj in solids.ToList())
                     {
-                        canMove = false;
+                        if (obj.X == GridSnapMouse.X && obj.Y == GridSnapMouse.Y)
+                        {
+                            canMove = false;
+                        }
+                    }
+                    if (canMove)
+                    {
+                        X = GridSnapMouse.X;
+                        Y = GridSnapMouse.Y;
                     }
                 }
-                if (canMove)
-                {
-                    X = GridSnapMouse.X;
-                    Y = GridSnapMouse.Y;
-                }
-
             }
+
             if (Path != null && Path.Count > 0)
             {
                 XTarget = Path.Peek().Parent.Center.X;
@@ -91,10 +194,8 @@ namespace AI_AStar.Code.GameObjects
                 X += Math.Abs(X - XTarget) < Math.Abs(XSpeed) ? 0 : XSpeed;
                 Y += Math.Abs(Y - YTarget) < Math.Abs(YSpeed) ? 0 : YSpeed;
                 
-
                 xPrevious = setValue(Convert.ToSingle(X));
                 yPrevious = setValue(Convert.ToSingle(Y));
-
 
                 if (Math.Abs(X - XTarget) < Math.Abs(XSpeed))
                 {
@@ -105,7 +206,6 @@ namespace AI_AStar.Code.GameObjects
                     Y = YTarget;
                 }
                 
-
                 if (X == XTarget && Y == YTarget)
                 {
                     xCurrent = setValue(Convert.ToSingle(X));
@@ -142,6 +242,18 @@ namespace AI_AStar.Code.GameObjects
                 }
 
             }
+            
+            if(Target != null)
+            {
+                Color = Color.Black;
+                if (LineToObjectCollision(new Vector2(X,Y), new Vector2(Target.X, Target.Y),typeof(Solid)))
+                {
+                    Color = Color.Purple;
+                }
+                DrawLine(new Vector2(X, Y), new Vector2(Target.X, Target.Y), LineColor, 0);
+
+            }
+
             base.Draw();
         }
     }

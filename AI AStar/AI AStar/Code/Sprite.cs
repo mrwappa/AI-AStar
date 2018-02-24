@@ -16,6 +16,11 @@ namespace AI_AStar.Code
 
         public Texture2D Texture { get; private set; }
 
+        private float XScale;
+        private float YScale;
+
+        public Vector2 Bounds => new Vector2(Texture.Width * XScale, Texture.Height * YScale);
+
         public int AnimationIndex { get; protected set; }
         public float AnimationSpeed { get; set; }
         public int NumberOfFrames { get; set; }
@@ -33,6 +38,10 @@ namespace AI_AStar.Code
 
         public void DrawSprite(float x, float y, float xscale, float yscale, float angle, Color color, float alpha, float depth)
         {
+            //used for bounds
+            XScale = xscale;
+            YScale = yscale;
+
             //Animation
             AnimationSpeed = MathHelper.Clamp(AnimationSpeed, 0, 1);
             if (AnimationSpeed > 0)

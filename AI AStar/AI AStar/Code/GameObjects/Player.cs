@@ -89,6 +89,7 @@ namespace AI_AStar.Code.GameObjects
             CollideBlock = BoxCollisionList(xSpeed, 0, typeof(Solid));
             if (CollideBlock != null)
             {
+                //stop moving and get as close as possible
                 xSpeed = 0;
                 X = (float)Math.Round(X);
                 for (int i = 0; i < Math.Abs(xSpeed); i++)
@@ -100,6 +101,7 @@ namespace AI_AStar.Code.GameObjects
                     X += Math.Sign(xSpeed);
                 }
                 
+                //prevents getting stuck when moving diagonally
                 if(X > CollideBlock.X && BoxCollision(0,0,CollideBlock) != null)
                 {
                     float p_difference = Math.Abs((X - Sprite.Texture.Width / 2) - (CollideBlock.X + CollideBlock.Sprite.Texture.Width / 2));
@@ -117,42 +119,13 @@ namespace AI_AStar.Code.GameObjects
                     }
 
                 }
-                /*if (X > CollideBlock.BoundingBox.X && xSpeed < 0)
-                {
-                    xSpeed = 0;
-                    X = CollideBlock.BoundingBox.X + CollideBlock.BoundingBox.Width + Math.Abs(X - BoundingBox.X);
-                    for (int i = 0; i < Math.Abs(xSpeed); i++)
-                    {
-                        if (BoxCollision(Math.Sign(xSpeed), 0, CollideBlock) != null)
-                        {
-                            break;
-                        }
-                        X -= Math.Sign(xSpeed);
-                    }
-                    
-                }
-                if (X < CollideBlock.BoundingBox.X && xSpeed > 0)
-                {
-                    xSpeed = 0;
-                    X = CollideBlock.BoundingBox.X + Math.Abs(X - BoundingBox.X) - BoundingBox.Width;
-                    for (int i = 0; i < Math.Abs(xSpeed); i++)
-                    {
-                        if (BoxCollision(Math.Sign(xSpeed), 0, CollideBlock) != null)
-                        {
-                            break;
-                        }
-                        X -= Math.Sign(xSpeed);
-                    }
-                    
-                }*/
-
-
+                
             }
 
             CollideBlock = BoxCollisionList(0, ySpeed, typeof(Solid));
             if(CollideBlock != null)
             {
-
+                //stop moving and get as close as possible
                 ySpeed = 0;
                 Y = (float)Math.Round(Y);
                 for (int i = 0; i < Math.Abs(ySpeed); i++)
@@ -163,40 +136,13 @@ namespace AI_AStar.Code.GameObjects
                     }
                     Y += Math.Sign(ySpeed);
                 }
-                /*if (Y > CollideBlock.BoundingBox.Y && ySpeed < 0)
-                {
-                    ySpeed = 0;
-                    Y = CollideBlock.BoundingBox.Y + CollideBlock.BoundingBox.Height + Math.Abs(Y - BoundingBox.Y);
-                    for (int i = 0; i < Math.Abs(ySpeed); i++)
-                    {
-                        if (BoxCollision(0, Math.Sign(ySpeed), CollideBlock) != null)
-                        {
-                            break;
-                        }
-                        Y -= Math.Sign(ySpeed);
-                    }
-                    
-                }
-                if(Y < CollideBlock.BoundingBox.Y && ySpeed > 0)
-                {
-                    ySpeed = 0;
-                    Y = CollideBlock.BoundingBox.Y + Math.Abs(Y - BoundingBox.Y) - BoundingBox.Height;
-                    for (int i = 0; i < Math.Abs(ySpeed); i++)
-                    {
-                        if (BoxCollision(0, Math.Sign(ySpeed), CollideBlock) != null)
-                        {
-                            break;
-                        }
-                        Y -= Math.Sign(ySpeed);
-                    }
-                    
-                }*/
             }
       
             X += xSpeed;
             Y += ySpeed;
-            
-           
+
+            X = MathHelper.Clamp(X, 0 + Sprite.Bounds.X / 2, Camera.Width - Sprite.Bounds.X / 2);
+            Y = MathHelper.Clamp(Y, 0 + Sprite.Bounds.Y / 2, Camera.Height - Sprite.Bounds.Y / 2);
 
             base.Update();
         }
