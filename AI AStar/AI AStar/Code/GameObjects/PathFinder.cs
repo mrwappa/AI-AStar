@@ -27,6 +27,7 @@ namespace AI_AStar.Code.GameObjects
         Color LineColor;
 
         float pathCounter;
+        float switchStateCounter;
 
         enum FinderState { Idle, Follow }
 
@@ -56,7 +57,7 @@ namespace AI_AStar.Code.GameObjects
                      Path = AStarGrid.FindPath(SnapToGrid(X, Y), GridSnapMouse);
                 }
             }*/
-
+            switchStateCounter -= 1f / 60f;
             if (CurrentState == (int)FinderState.Idle)
             {
                 Path = null;
@@ -68,14 +69,16 @@ namespace AI_AStar.Code.GameObjects
             if (CurrentState == (int)FinderState.Follow)
             {
                 pathCounter -= 1f / 60f;
+
                 if (LineToObjectCollision(new Vector2(X, Y), new Vector2(Target.X, Target.Y), typeof(Solid)) && Path == null && pathCounter <= 0)
                 {
                     Path = AStarGrid.FindPath(SnapToGrid(X, Y), SnapToGrid(Target.X,Target.Y));
                     pathCounter = 0.5f;
                 }
-                if(!LineToObjectCollision(new Vector2(X, Y), new Vector2(Target.X, Target.Y), typeof(Solid)) && pathCounter <= 0)
+                if(!LineToObjectCollision(new Vector2(X, Y), new Vector2(Target.X, Target.Y), typeof(Solid)) && pathCounter <= 0 && switchStateCounter <= 0)
                 {
                     Path = null;
+                    switchStateCounter = 0.4f;
                 }
                 if (Path == null)
                 {
@@ -116,8 +119,7 @@ namespace AI_AStar.Code.GameObjects
                             }
 
                         }
-
-
+                        Path = AStarGrid.FindPath(SnapToGrid(X, Y), SnapToGrid(Target.X, Target.Y));
                     }
 
                     CollideBlock = BoxCollisionList(0, YSpeed, typeof(Solid));
@@ -134,6 +136,7 @@ namespace AI_AStar.Code.GameObjects
                             }
                             Y += Math.Sign(YSpeed);
                         }
+                        Path = AStarGrid.FindPath(SnapToGrid(X, Y), SnapToGrid(Target.X, Target.Y));
                     }
 
                     X += XSpeed;

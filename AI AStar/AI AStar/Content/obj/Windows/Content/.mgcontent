@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>Windows</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/erik.wapner/AppData/Local/GitHubDesktop/app-1.0.13/AI-AStar/AI AStar/AI AStar/Content/Sprites/spr_box.png</File>
+    <File>C:/Users/erik.wapner/AppData/Local/GitHubDesktop/app-1.0.13/AI-AStar/AI AStar/AI AStar/Content/Sprites/spr_pixel.png</File>
+    <File>C:/Users/erik.wapner/AppData/Local/GitHubDesktop/app-1.0.13/AI-AStar/AI AStar/AI AStar/Content/Font.spritefont</File>
+  </SourceFiles>
+</SourceFileCollection>
