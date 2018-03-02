@@ -21,12 +21,13 @@ namespace AI_AStar.Code.GameObjects
         public float XTarget { get; set; }
         public float YTarget { get; set; }
         public float Direction { get; set; }
+        public float PathCounter { get; set; }
 
         GameObject Target;
         CollideObject CollideBlock;
         Color LineColor;
 
-        float pathCounter;
+        
         float switchStateCounter;
 
         enum FinderState { Idle, Follow }
@@ -42,22 +43,31 @@ namespace AI_AStar.Code.GameObjects
         {
             Sprite = new Sprite(Box, 1);
             Color = Color.Red;
-            MovementSpeed = 3f;
+            MovementSpeed = 5f;
             CurrentState = (int)FinderState.Idle;
             LineColor = Color.Black;
         }
 
+
+        
+
+        public void NewPath(int targetX, int targetY)
+        {
+            Path = AStarGrid.FindPath(SnapToGrid(X, Y), SnapToGrid(targetX, targetY));
+        }
+
         public override void Update()
         {
-            Target = GetObject(typeof(Player));
-            /*if (Keyboard.IsKeyDown(Keys.Space) && GetMousePressed(Mouse.LeftButton))
+            //Target = GetObject(typeof(Player));
+            if (Keyboard.IsKeyDown(Keys.Space) && GetMousePressed(Mouse.LeftButton))
             {
                 if (GridSnapMouse != SnapToGrid(X, Y))
                 {
-                     Path = AStarGrid.FindPath(SnapToGrid(X, Y), GridSnapMouse);
+                    //Path = AStarGrid.FindPath(SnapToGrid(X, Y), GridSnapMouse);
+                    NewPath((int)GridSnapMouse.X, (int)GridSnapMouse.Y);
                 }
-            }*/
-            switchStateCounter -= 1f / 60f;
+            }
+            /*switchStateCounter -= 1f / 60f;
             if (CurrentState == (int)FinderState.Idle)
             {
                 Path = null;
@@ -146,7 +156,7 @@ namespace AI_AStar.Code.GameObjects
                 {
 
                 }
-            }
+            }*/
             
             if (Keyboard.IsKeyDown(Keys.LeftShift) && GetMousePressed(Mouse.LeftButton))
             {

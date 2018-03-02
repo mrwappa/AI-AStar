@@ -23,17 +23,6 @@ namespace AI_AStar.Code.GameObjects
             Content = content;
             Box = Content.Load<Texture2D>("Sprites/spr_box");
             Pixel = Content.Load<Texture2D>("Sprites/spr_pixel");
-
-            List<List<Node>> temp = new List<List<Node>>();
-            for (int i = 0; i < 30; i++)//30
-            {
-                temp.Add(new List<Node>());
-                for (int j = 0; j < 17; j++)//17
-                {
-                    temp[i].Add(new Node(new Vector2(i, j), true));
-                }
-            }
-            AStarGrid = new Astar(temp);
             new Room(0, 0);
         }
 
@@ -183,7 +172,7 @@ namespace AI_AStar.Code.GameObjects
         public virtual GameObject GetObject(Type type)
         {
             SuperList.TryGetValue(type, out list);
-            if (list.Count != 0)
+            if (list != null && list.Count != 0)
             {
                 return list[0];
             }

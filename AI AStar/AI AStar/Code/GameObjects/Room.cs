@@ -12,19 +12,92 @@ namespace AI_AStar.Code.GameObjects
 {
     class Room : GameObject
     {
+        System.Drawing.Bitmap image;
+        System.Windows.Forms.OpenFileDialog fileDialog;
+
+        Vector2 PathPosition;
+
         public Room(float x, float y) : base(x, y)
         {
+            fileDialog = new System.Windows.Forms.OpenFileDialog();
+            fileDialog.Filter = "Data Files (*.png)|*.png";
             CreateInstances();
         }
 
+
+        public void CreateGrid(int width, int height , System.Drawing.Bitmap aImage)
+        {
+            List<List<Node>> temp = new List<List<Node>>();
+            AStarGrid = new Astar(temp);
+            for (int i = 0; i < width; i++)//30
+            {
+                temp.Add(new List<Node>());
+                for (int j = 0; j < height; j++)//17
+                {
+                    temp[i].Add(new Node(new Vector2(i, j), true));
+                    if(image != null)
+                    {
+                        bool black = image.GetPixel(i, j).R == 0 && image.GetPixel(i, j).G == 0 && image.GetPixel(i, j).B == 0 && image.GetPixel(i, j).A == 255;
+                        bool green = image.GetPixel(i, j).R == 0 && image.GetPixel(i, j).G == 255 && image.GetPixel(i, j).B == 0 && image.GetPixel(i, j).A == 255;
+                        bool blue = image.GetPixel(i, j).R == 0 && image.GetPixel(i, j).G == 0 && image.GetPixel(i, j).B == 255 && image.GetPixel(i, j).A == 255;
+                        if (black)
+                        {
+                            new Brick(i * Node.NODE_SIZE + 16, j * Node.NODE_SIZE + 16);
+                        }
+                        if (blue)
+                        {
+                            new PathFinder(i * Node.NODE_SIZE + 16, j * Node.NODE_SIZE + 16);
+                        }
+                        if (green)
+                        {
+                            
+                            PathPosition = new Vector2(i * Node.NODE_SIZE + 16, j * Node.NODE_SIZE + 16);
+                        }
+                    } 
+                }
+            }
+
+            
+
+            if (PathPosition != null)
+            {
+                PathFinder pathFinder = GetObject(typeof(PathFinder)) as PathFinder;
+                pathFinder.NewPath((int)PathPosition.X, (int)PathPosition.Y);
+            }
+            AStarGrid = new Astar(temp);
+
+        }
+
+        public void FileDialog()
+        {
+            DestroyAll();
+            new Room(0,0);
+            System.Windows.Forms.DialogResult r = fileDialog.ShowDialog();
+
+            if(r == System.Windows.Forms.DialogResult.OK)
+            {
+                System.IO.FileInfo fInfo = new System.IO.FileInfo(fileDialog.FileName);
+
+                image = new System.Drawing.Bitmap(fInfo.ToString());
+                CreateGrid(image.Width, image.Height,image);
+
+            }
+        }
+        
         public void CreateInstances()
         {
-            new PathFinder(32 + 16, 32 + 16);
-            new Player(300, 300);
+            /*new PathFinder(32 + 16, 32 + 16);
+            new Player(300, 300);*/
         }
 
         public override void Update()
         {
+            if(GetKeyPressed(Keys.Tab))
+            {
+                FileDialog();
+            }
+
+
             if (Mouse.LeftButton == ButtonState.Pressed && Keyboard.IsKeyUp(Keys.LeftShift) && Keyboard.IsKeyUp(Keys.Space))
             {
                 if (GridSnapMouse.X < 960 && GridSnapMouse.Y < 540 && GridSnapMouse.X > 0 && GridSnapMouse.Y > 0)
