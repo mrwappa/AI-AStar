@@ -59,6 +59,7 @@ namespace AI_AStar.Code.GameObjects
         public override void Update()
         {
             //Target = GetObject(typeof(Player));
+            Camera.Position = new Vector2(X, Y);
             if (Keyboard.IsKeyDown(Keys.Space) && GetMousePressed(Mouse.LeftButton))
             {
                 if (GridSnapMouse != SnapToGrid(X, Y))

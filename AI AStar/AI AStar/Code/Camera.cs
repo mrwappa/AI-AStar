@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
+using AI_AStar.Code;
+using AI_AStar.Code.GameObjects;
+
 
 namespace AI_AStar.Code
 {
@@ -133,11 +136,9 @@ namespace AI_AStar.Code
             //clamp the camera position to the room
             positionClampX = (MonitorWidth / widthScale / Zoom) / 2;
             positionClampY = (MonitorHeight / heightScale / Zoom) / 2;
-            Position = Vector2.Clamp(Position, new Vector2(0 + positionClampX, 0 + positionClampY), new Vector2(2000 - positionClampX, 2000 - positionClampY));
+            Position = Vector2.Max(Position, new Vector2(0 + positionClampX, 0 + positionClampY) );
 
             ScreenShake = MathHelper.Lerp(ScreenShake, 0, 0.55f);
-
-
 
             Center = new Vector2((Position.X) + ScreenShake * random.Next(-2, 2), (Position.Y) + ScreenShake * random.Next(-2, 2));
             X = (int)Center.X;

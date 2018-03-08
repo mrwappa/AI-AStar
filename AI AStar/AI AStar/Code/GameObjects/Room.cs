@@ -97,46 +97,49 @@ namespace AI_AStar.Code.GameObjects
                 FileDialog();
             }
 
-
-            if (Mouse.LeftButton == ButtonState.Pressed && Keyboard.IsKeyUp(Keys.LeftShift) && Keyboard.IsKeyUp(Keys.Space))
+            if(AStarGrid != null)
             {
-                if (GridSnapMouse.X < 960 && GridSnapMouse.Y < 540 && GridSnapMouse.X > 0 && GridSnapMouse.Y > 0)
+                if (Mouse.LeftButton == ButtonState.Pressed && Keyboard.IsKeyUp(Keys.LeftShift) && Keyboard.IsKeyUp(Keys.Space))
                 {
-                    List<CollideObject> solids = CollideObject.GetList(typeof(Solid));
-                    if (solids != null)
+                    if (GridSnapMouse.X < 960 && GridSnapMouse.Y < 540 && GridSnapMouse.X > 0 && GridSnapMouse.Y > 0)
                     {
-                        bool canCreate = true;
-                        foreach (Solid obj in solids)
+                        List<CollideObject> solids = CollideObject.GetList(typeof(Solid));
+                        if (solids != null)
                         {
-                            if (obj.X == GridSnapMouse.X && obj.Y == GridSnapMouse.Y)
+                            bool canCreate = true;
+                            foreach (Solid obj in solids)
                             {
-                                canCreate = false;
+                                if (obj.X == GridSnapMouse.X && obj.Y == GridSnapMouse.Y)
+                                {
+                                    canCreate = false;
+                                }
+                            }
+                            if (canCreate)
+                            {
+                                new Brick(GridSnapMouse.X, GridSnapMouse.Y);
                             }
                         }
-                        if (canCreate)
+                        else
                         {
                             new Brick(GridSnapMouse.X, GridSnapMouse.Y);
                         }
                     }
-                    else
-                    {
-                        new Brick(GridSnapMouse.X, GridSnapMouse.Y);
-                    }
+
                 }
 
-            }
-
-            if (Mouse.RightButton == ButtonState.Pressed)
-            {
-                List<CollideObject> solids = CollideObject.GetList(typeof(Solid));
-                foreach (Solid obj in solids.ToList())
+                if (Mouse.RightButton == ButtonState.Pressed)
                 {
-                    if (obj.X == GridSnapMouse.X && obj.Y == GridSnapMouse.Y)
+                    List<CollideObject> solids = CollideObject.GetList(typeof(Solid));
+                    foreach (Solid obj in solids.ToList())
                     {
-                        DestroyInstance(obj);
+                        if (obj.X == GridSnapMouse.X && obj.Y == GridSnapMouse.Y)
+                        {
+                            DestroyInstance(obj);
+                        }
                     }
                 }
             }
+            
 
             if(GetKeyPressed(Keys.R))
             {
